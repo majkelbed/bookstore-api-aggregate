@@ -1,0 +1,57 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  city: String!
+  firstLine: String!
+  postalCode: String!
+  secondLine: String!
+}
+
+type Customer {
+  address: Address!
+  email: String!
+  name: String!
+  password: String!
+  phone: String!
+  repeatPassword: String!
+}
+
+type Mutation {
+  registerCustomer(registerCustomerInput: RegisterCustomerInput!): Customer!
+}
+
+type Product {
+  """Product description"""
+  description: String!
+
+  """Product UUID"""
+  id: String!
+
+  """Product name"""
+  name: Int!
+
+  """Product price"""
+  price: Float!
+}
+
+type Query {
+  product(id: Int!): Product!
+}
+
+input RegisterCustomerAddressInput {
+  city: String!
+  firstLine: String!
+  postalCode: String!
+  secondLine: String!
+}
+
+input RegisterCustomerInput {
+  address: RegisterCustomerAddressInput!
+  email: String!
+  name: String!
+  password: String!
+  phone: String!
+  repeatPassword: String!
+}
