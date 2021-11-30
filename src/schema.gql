@@ -19,7 +19,7 @@ type Customer {
 }
 
 type Mutation {
-  registerCustomer(registerCustomerInput: RegisterCustomerInput!): Customer!
+  registerCustomer(registerCustomerInput: RegisterCustomerInput!): RegisterCustomerOutput!
 }
 
 type Product {
@@ -54,4 +54,9 @@ input RegisterCustomerInput {
   password: String!
   phone: String!
   repeatPassword: String!
+}
+
+type RegisterCustomerOutput {
+  customer: Customer!
+  token: String!
 }

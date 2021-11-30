@@ -1,11 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
-import { RegisterCustomerInput } from 'src/modules/customer/dto/register-customer.input';
-
-interface LoginBody {
-    email: string;
-    password: string;
-}
+import { LoginCustomerDto } from 'src/modules/customer/dto/login-customer.dto';
+import { RegisterCustomerDto } from 'src/modules/customer/dto/register-customer.dto';
 
 interface OrderBody {
     products: {
@@ -25,23 +21,28 @@ export class CoreApi {
     });
   }
 
-  login(data: LoginBody) {
-    return this.api.post('customers/login', { data });
-  }
-
-  async register(data: RegisterCustomerInput) {
+  async login(data: LoginCustomerDto) {
     try {
-      const res = await this.api.post('/customers/registration', { data });
-      return res;
+      const response = await this.api.post('/customers/login', data);
+      return response;
     } catch (error) {
       if(axios.isAxiosError(error)) {
         console.error(error.response.data);
         throw new BadRequestException(error.response.data);
       }
     }
+    return 
   }
 
-  createOrder(data: OrderBody) {
-    return this.api.post('/orders', { data });
+  async register(data: RegisterCustomerDto) {
+    try {
+      const response = await this.api.post<{ token: string }>('/customers/registration', data);
+      return response;
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
   }
 }
