@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Req } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { Request } from 'express';
 import { LoginCustomerDto } from 'src/modules/customer/dto/login-customer.dto';
 import { RegisterCustomerDto } from 'src/modules/customer/dto/register-customer.dto';
 
@@ -44,5 +45,22 @@ export class CoreApi {
         throw new BadRequestException(error.response.data);
       }
     }
+  }
+
+  async getOne(id: string, @Req() request: Request) {
+    try {
+      const response = await this.api.get(`/customers/${id}`, {
+        headers: {
+          "Authorization": request.headers.authorization
+        }
+      });
+      return response;
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
+    return 
   }
 }

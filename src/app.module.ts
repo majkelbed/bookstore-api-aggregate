@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CustomerModule } from './modules/customer/customer.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -10,8 +9,7 @@ import { CustomerModule } from './modules/customer/customer.module';
       envFilePath: 'config/.env',
     }),
     CustomerModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    ProductModule
+  ]
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { CustomerService } from './customer.service';
 import { LoginCustomerDto } from './dto/login-customer.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
@@ -15,5 +16,10 @@ export class CustomerController {
   @Post('login')
   login (@Body() loginCustomerDto: LoginCustomerDto) {
     return this.customerService.login(loginCustomerDto);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string, @Req() request: Request) {
+    return this.customerService.findOne(id, request);
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Request } from 'express';
 import { CoreApi } from 'src/clients/core';
 import { LoginCustomerDto } from './dto/login-customer.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
@@ -14,6 +15,11 @@ export class CustomerService {
 
   async login(dto: LoginCustomerDto) {
     const response = await this.coreApi.login(dto);
+    return response.data;
+  }
+
+  async findOne(id: string, request: Request) {
+    const response = await this.coreApi.getOne(id, request);
     return response.data;
   }
 }
