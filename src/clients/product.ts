@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, Req } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { CreateReviewDto } from 'src/modules/product/dto/create-review.dto';
 
 @Injectable()
 export class ProductApi {
@@ -24,9 +25,35 @@ export class ProductApi {
     return 
   }
 
-  async getOne(id: number) {
+  async getAllReviews(id: string) {
+    try {
+      const response = await this.api.get(`/Reviews/${id}`);
+      return response;
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
+    return 
+  }
+
+  async getOne(id: string) {
     try {
       const response = await this.api.get(`/Products/${id}`);
+      return response;
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
+    return 
+  }
+
+  async createReview(createReviewDto: CreateReviewDto) {
+    try {
+      const response = await this.api.post(`/Reviews`, createReviewDto);
       return response;
     } catch (error) {
       if(axios.isAxiosError(error)) {
