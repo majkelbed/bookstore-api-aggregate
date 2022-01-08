@@ -18,7 +18,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+
+    "init:cluster_aggregate": "kind load docker-image bookstore-api-aggregate_dev && kubectl apply -f k8s/bookstore-api-aggregate-deployment.yml",
+
+    "init:cluster_products": "kind load docker-image bookstoreapiproducts && kubectl apply -f ./../bookstore-api-products/k8s/bookstore-api-products-deployment.yml && kubectl apply -f ./../bookstore-api-products/k8s/postgres-deployment.yml",
+    
+    "init:cluster_core": "kind create cluster --config=./../bookstore-api/k8s/kind-config.yml && kind load docker-image postgres:14.1 && kind load docker-image bookstore-api && kind load docker-image prom/prometheus:v2.21.0 && kind load docker-image elasticsearch:7.14.2 && kind load docker-image kibana:7.14.2 && kubectl apply -f ./../bookstore-api/k8s/elasticsearch-deployment.yml && kubectl apply -f ./../bookstore-api/k8s/kibana-deployment.yml && kubectl apply -f ./../bookstore-api/k8s/bookstore-api-deployment.yml && kubectl apply -f ./../bookstore-api/k8s/postgres-deployment.yml && kubectl apply -f ./../bookstore-api/k8s/prometheus-config-map.yml && kubectl apply -f ./../bookstore-api/k8s/prometheus-deployment.yml"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
