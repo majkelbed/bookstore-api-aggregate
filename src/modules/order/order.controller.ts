@@ -13,7 +13,7 @@ export class OrderController {
   }
 
   @Get()
-  findAll() {
-    return this.orderService.findAll();
+  findAll(@Req() request: Request) {
+    return this.orderService.findAll(request);
   }
 }

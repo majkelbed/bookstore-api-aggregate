@@ -51,6 +51,31 @@ export class CoreApi {
     }
   }
 
+  async update(data: RegisterCustomerDto, request: Request) {
+    try {
+      console.log('data', data);
+      const response = await this.api.patch<{ token: string }>(
+        '/customers',
+        data,
+        {
+          headers: {
+            Authorization: request.headers.authorization,
+          },
+        },
+      );
+      console.log('response', response);
+      return response;
+    } catch (error) {
+      console.log('request', error);
+
+      if (axios.isAxiosError(error)) {
+        console.log('request', error.request);
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
+  }
+
   async getOne(id: string, request: Request) {
     try {
       const response = await this.api.get(`/customers/${id}`, {
@@ -70,8 +95,27 @@ export class CoreApi {
 
   async createOrder(order: CreateOrderDto, request: Request) {
     try {
-      console.log('order', order);
-      const response = await this.api.post(`/orders`, order, {
+      const headers = {
+        Authorization: request.headers.authorization,
+      };
+      const options = { headers: {} };
+      if (request.headers.authorization && order.customerId) {
+        options.headers = headers;
+      }
+      const response = await this.api.post(`/orders`, order, options);
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response.data);
+        throw new BadRequestException(error.response.data);
+      }
+    }
+    return;
+  }
+
+  async getAllOrders(request: Request) {
+    try {
+      const response = await this.api.get(`/orders`, {
         headers: request.headers.authorization && {
           Authorization: request.headers.authorization,
         },

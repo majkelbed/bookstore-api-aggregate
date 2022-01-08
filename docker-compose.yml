@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    dev:
+        container_name: aggregate_api
+        build: .
+        command: npm run start:dev
+        ports:
+            - 3000:3000
+            - 9229:9229
+        networks:
+            - nesjs-network
+        volumes:
+            - ./:/usr/src/app/
+            - ./node_modules:/usr/src/app/node_modules
+networks:
+    nesjs-network:

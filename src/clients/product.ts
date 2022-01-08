@@ -14,7 +14,9 @@ export class ProductApi {
 
   async getAll() {
     try {
+      console.log('OK< REQUEST');
       const response = await this.api.get('/Products');
+      console.log(response, 'lalla');
       return response;
     } catch (error) {
       if(axios.isAxiosError(error)) {

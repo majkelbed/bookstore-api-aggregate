@@ -3,7 +3,7 @@ export class CreateOrderDto {
     productId: string;
     quantity: number;
   }[];
-  customer: {
+  customer?: {
     id: string;
     name: string;
     email: string;
@@ -15,4 +15,5 @@ export class CreateOrderDto {
       postalCode: string;
     };
   };
+  customerId?: string;
 }

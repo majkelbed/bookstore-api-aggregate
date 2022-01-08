@@ -12,7 +12,8 @@ export class OrderService {
     return response.data;
   }
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll(request: Request) {
+    const response = await this.coreApi.getAllOrders(request);
+    return response.data;
   }
 }

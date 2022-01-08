@@ -8,6 +8,7 @@ export class ProductController {
 
   @Get()
   findAll() {
+    console.log('OK< REQUEST CONTROLLER');
     return this.productService.findAll();
   }
 

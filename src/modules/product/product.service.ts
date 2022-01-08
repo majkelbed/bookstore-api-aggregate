@@ -7,7 +7,9 @@ export class ProductService {
   constructor(private readonly productApi: ProductApi) {}
 
   async findAll() {
+    console.log('OK< REQUEST');
     const response = await this.productApi.getAll();
+    console.log('find', response);
     return response.data;
   }
 

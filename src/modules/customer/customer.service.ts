@@ -22,4 +22,9 @@ export class CustomerService {
     const response = await this.coreApi.getOne(id, request);
     return response.data;
   }
+
+  async update(dto: RegisterCustomerDto, request: Request) {
+    const response = await this.coreApi.update(dto, request);
+    return response.data;
+  }
 }
